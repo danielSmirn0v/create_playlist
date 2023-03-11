@@ -24,7 +24,7 @@ class User:
 
     @classmethod 
     def save(cls,data):
-        query = 'INSERT INTO users (username, first_name, last_name, email, password) VALUES %(username)s, %(first_name)s, %(last_name)s, %(email)s, %(password)s'
+        query = 'INSERT INTO users (username, first_name, last_name, email, password) VALUES(%(username)s, %(first_name)s, %(last_name)s, %(email)s, %(password)s)'
         result = connectToMySQL(cls.db).query_db(query, data)
         return result
     
@@ -42,6 +42,14 @@ class User:
         query = 'SELECT * FROM users WHERE users.id = %(id)s'
         result  = connectToMySQL(cls.db).query_db(query,data)
         print(result)
+        if result:
+            return cls(result[0])
+        return False
+
+    @classmethod
+    def get_onewith_username(cls,data):
+        query = 'SELECT * FROM users WHERE username = %(username)s'
+        result  = connectToMySQL(cls.db).query_db(query,data)
         if result:
             return cls(result[0])
         return False
@@ -86,7 +94,7 @@ class User:
         if not EMAIL_REGEX.match(user['email']):
             flash("User already taken")
             is_valid = False
-        if not username.match(user['username']):#fig8ure out a way to test if username already taken
-            flash("User already taken")
-            is_valid = False
+#        if not username.match(user['username']):#fig8ure out a way to test if username already taken
+#            flash("User already taken")
+#            is_valid = False
         return is_valid
