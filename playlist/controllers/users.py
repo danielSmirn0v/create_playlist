@@ -8,4 +8,4 @@ from playlist.models import user
 
 @app.route('/')
 def check():
-    return render_template('check.html')
+    return render_template('list_playlist_base.html')
