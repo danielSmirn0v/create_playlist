@@ -85,7 +85,7 @@ def update_user(id):
 
     return redirect('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']}))
 
-@app.route('/user/<id:id>/update/')
+@app.route('/user/<id:id>/update/', methods = ['POST'])#write porper update method in 
 def update_user(id):
 
     if 'user_info' not in session:
