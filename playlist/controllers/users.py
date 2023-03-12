@@ -77,7 +77,7 @@ def user_dash():
     print('wowow')
     return render_template('update_user_info.html', user = user.User.get_one_by_id(data)) 
 
-@app.route('/user/<id:id>/update')
+@app.route('/user/<id:id>/update')##route might neeed renaming?
 def update_user(id):
 
     if 'user_info' not in session:
@@ -85,10 +85,24 @@ def update_user(id):
 
     return redirect('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']}))
 
-@app.route('/user/<id:id>/update/', methods = ['POST'])#write porper update method in 
+@app.route('/user/<id:id>/update', methods = ['POST']) ##check to see if it work, might have to add some things in
 def update_user(id):
 
     if 'user_info' not in session:
         return redirect('/')
 
-    return redirect('list_playlist_in_session.html')
+    if not user.User.validate(request.form):
+        return redirect(f'user/{id}/update')
+
+    data={
+            "id":id,
+            "username":request.form["username"],
+            "first_name":request.form["first_name"],
+            "last_name":request.form["last_name"],
+            "email":request.form["email"],
+
+    }
+
+    user.User.update(data)
+
+    return redirect('list_playlist_in_session.html') ##find a better place to re-route, maybe make a user info page
