@@ -75,6 +75,15 @@ def user_dash():
     print('wowow')
     return render_template('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']})) ##dashabord html should be different
 
+
+@app.route('/playlist/user/<int:id>/all_playlists')
+def user_show_all_playlists(id):
+
+    if 'user_info' not in session:
+        return redirect('/')
+
+    return render_template('user_playlists.html', play = playlist.Playlist.get_one({'id': session['user_info']}))
+
 @app.route('/playlist/user/<int:id>/update')
 def update_user_page(id):
 

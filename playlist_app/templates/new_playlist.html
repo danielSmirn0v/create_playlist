@@ -36,7 +36,6 @@
 
     </div>
 
-    <h1 class="m-3">Report What you observed</h1>
     <div class=" text-center ">
     {% with messages = get_flashed_messages() %}     
         {% if messages %}                            
@@ -49,7 +48,7 @@
     <div class="d-flex justify-content-evenly">
 
         <div class="m-3">
-            <form action="/new/playlist/create"  method = 'POST'>
+            <form action="/playlist/create/{{user.id}}/new_playlist"  method = 'POST'>
                 <div class="form-group " >
                     <div class="form-group" style="font-weight: bold;">
                         <label for="ply_nme" >Name of playlist:</label>
