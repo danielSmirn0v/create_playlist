@@ -75,4 +75,20 @@ def user_dash():
         'id' : session['user_info']
     }
     print('wowow')
-    return render_template('list_playlist_in_session.html', user = user.User.get_one_by_id(data)) 
+    return render_template('update_user_info.html', user = user.User.get_one_by_id(data)) 
+
+@app.route('/user/<id:id>/update')
+def update_user(id):
+
+    if 'user_info' not in session:
+        return redirect('/')
+
+    return redirect('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']}))
+
+@app.route('/user/<id:id>/update/')
+def update_user(id):
+
+    if 'user_info' not in session:
+        return redirect('/')
+
+    return redirect('list_playlist_in_session.html')
