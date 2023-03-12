@@ -49,30 +49,15 @@
     <div class="d-flex justify-content-evenly">
 
         <div class="m-3">
-            <form action="/new/sighting/create"  method = 'POST'>
+            <form action="/new/playlist/create"  method = 'POST'>
                 <div class="form-group " >
                     <div class="form-group" style="font-weight: bold;">
-                        <label for="loc" >Location:</label>
-                        <input type="text" class="form-control" name="location" id="loc" placeholder="location">
+                        <label for="ply_nme" >Name of playlist:</label>
+                        <input type="text" class="form-control" name="playlist_name" id="loc" placeholder="playlist name">
                     </div>
                     
-                    <div class="form-group" style="font-weight: bold;">
-                        <label for="ex">What happened:</label>
-                        <input type="text" class="form-control" name = 'what_happened' id="ex" >
-                    </div>
-
-                    <div class="form-group" style="font-weight: bold;">
-                        <label for="date" style="font-weight: bold;">Date when spotted:</label>
-                        <input type="date" class="form-control" id="date" name="date_sighted" aria-describedby="emailHelp" >
-                        
-                    </div>
-
-                    <div class="form-group m-1" style="font-weight: bold;">
-                        <label for="quantity">How many sasquatches did you see?</label>
-                        <input type="number" id="quantity" name="num_of_sas" min="1" >
-                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary m-3">Report New Sighting!</button>
+                <button type="submit" class="btn btn-primary m-3">New playlist!</button>
             </form>
     
         </div>

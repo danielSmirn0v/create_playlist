@@ -3,7 +3,7 @@ from playlist import app
 
 from flask import Flask, render_template, request, redirect, session, flash
 
-from playlist.models import user
+from playlist.models import user, playlist
 
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -71,11 +71,9 @@ def user_dash():
 
     if 'user_info' not in session:
         return redirect('/')
-    data = {
-        'id' : session['user_info']
-    }
+
     print('wowow')
-    return render_template('update_user_info.html', user = user.User.get_one_by_id(data)) 
+    return render_template('update_user_info.html', user = user.User.get_one_by_id({'id': session['user_info']})) ##dashabord html should be different
 
 @app.route('/user/<id:id>/update')##route might neeed renaming?
 def update_user(id):
