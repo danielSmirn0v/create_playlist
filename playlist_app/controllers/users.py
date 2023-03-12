@@ -1,9 +1,9 @@
 
-from playlist import app
+from playlist_app import app
 
 from flask import Flask, render_template, request, redirect, session, flash
 
-from playlist.models import user, playlist
+from playlist_app.models import user, playlist
 
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -54,7 +54,7 @@ def register():
                 return redirect("/")
             if bcrypt.check_password_hash(user_info.password, request.form['password']):
                 session["user_info"] = user_info.id
-                return redirect("/dashboard")
+                return redirect("/playlist/dashboard")
             else:
                 flash("Incorrect Password")
                 return redirect("/")
@@ -64,33 +64,34 @@ def register():
 
 
 
-    return redirect('/dashboard')
+    return redirect('/playlist/dashboard')
 
-@app.route('/dashboard')
+@app.route('/playlist/dashboard')
 def user_dash():
 
     if 'user_info' not in session:
         return redirect('/')
 
     print('wowow')
-    return render_template('update_user_info.html', user = user.User.get_one_by_id({'id': session['user_info']})) ##dashabord html should be different
+    return render_template('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']})) ##dashabord html should be different
 
-@app.route('/user/<id:id>/update')##route might neeed renaming?
+@app.route('/playlist/user/<int:id>/update')
+def update_user_page(id):
+
+    if 'user_info' not in session:
+        return redirect('/')
+    print(id)
+
+    return render_template('update_user_info.html', user = user.User.get_one_by_id({'id': session['user_info']}))
+
+@app.route('/user/<int:id>/update', methods = ['POST']) ##update works
 def update_user(id):
 
     if 'user_info' not in session:
         return redirect('/')
 
-    return redirect('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']}))
-
-@app.route('/user/<id:id>/update', methods = ['POST']) ##check to see if it work, might have to add some things in
-def update_user(id):
-
-    if 'user_info' not in session:
-        return redirect('/')
-
-    if not user.User.validate(request.form):
-        return redirect(f'user/{id}/update')
+    if not user.User.validate_update_user(request.form):
+        return redirect(f'/playlist/user/{id}/update')
 
     data={
             "id":id,
@@ -103,4 +104,9 @@ def update_user(id):
 
     user.User.update(data)
 
-    return redirect('list_playlist_in_session.html') ##find a better place to re-route, maybe make a user info page
+    return redirect('/playlist/dashboard') ##find a better place to re-route, maybe make a user info page
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')

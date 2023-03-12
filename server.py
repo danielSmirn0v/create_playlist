@@ -1,8 +1,8 @@
 
 
-from playlist import app
+from playlist_app import app
 
-from playlist.controllers import users
+from playlist_app.controllers import users,playlists
 
 
 

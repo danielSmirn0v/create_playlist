@@ -1,9 +1,9 @@
 
-from playlist.config.mysqlconnection import connectToMySQL
+from playlist_app.config.mysqlconnection import connectToMySQL
 
 from flask import flash
 
-from models import user
+from playlist_app.models import user
 
 
 class Playlist:

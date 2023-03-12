@@ -1,5 +1,5 @@
 
-from playlist.config.mysqlconnection import connectToMySQL
+from playlist_app.config.mysqlconnection import connectToMySQL
 
 import re
 
@@ -93,6 +93,25 @@ class User:
             is_valid = False
         if not EMAIL_REGEX.match(user['email']):
             flash("User already taken")
+            is_valid = False
+#        if not username.match(user['username']):#fig8ure out a way to test if username already taken
+#            flash("User already taken")
+#            is_valid = False
+        return is_valid
+
+    @staticmethod
+    def validate_update_user(user):
+        is_valid = True
+        query = 'SELECT * FROM users WHERE email = %(email)s'
+        result  = connectToMySQL(User.db).query_db(query,user)
+        if len(user['first_name']) < 2 :
+            flash('First name can not be less than 2 characters')
+            is_valid = False
+        if len(user['last_name']) < 2 :
+            flash('Last name can not be less than 2 characters')
+            is_valid = False
+        if not EMAIL_REGEX.match(user['email']):
+            flash("email not available")
             is_valid = False
 #        if not username.match(user['username']):#fig8ure out a way to test if username already taken
 #            flash("User already taken")
