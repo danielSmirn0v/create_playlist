@@ -15,44 +15,39 @@ class Playlist:
         self.track_name = data['track_name']
         self.artist_name = data['artist_name']
         self.user_id = data['user_id']
+        self.all_playlist = []
         self.creater = None
-        self.likes = []
+        # self.likes = []
 
     @classmethod
     def save(cls,data):
-        query = 'INSERT INTO playlists (playlist_name, track_name, artist_name) VALUES %(playlist_name)s, %(track_name)s,%(artist_name)s'
-        result = connectToMySQL(cls.db).query_db(query)
+        query = 'INSERT INTO playlists (user_id, playlist_name, track_name, artist_name) VALUES(%(user_id)s,%(playlist_name)s, %(track_name)s,%(artist_name)s)'
+        result = connectToMySQL(cls.db).query_db(query, data)
         print (result)
         return result
 
-    @classmethod
-    def get_all(cls,data):
-        query = 'SELECT * FROM playlist LEFT JOIN likes ON playlists.id = likes.playlist_id LEFT JOIN users on likes.user_id = users.id'
+    @classmethod        #    SELECT * FROM sighting LEFT JOIN users ON sighting.user_id = users.id WHERE sighting.id = %(id)s
+    def get_all(cls):
+        query = 'SELECT * FROM playlists LEFT JOIN users ON playlists.user_id = users.id'
         results = connectToMySQL(cls.db).query_db(query)
-        print (results)
+        print (f'{results} this is results')
         all_playlists = []
-        this_playlist=None
         for row in results:
-            if this_playlist == None:
-                this_playlist = cls(row)
-            if not this_playlist.id == row['id']:
-                all_playlists.append(this_playlist)
-                this_playlist = cls(row)
-                
-            if row['playlist_id'] == None:
-                break
+            this_playlist = cls(row)
             data={
                 'id':row['users.id'],
                 'username':row['username'],
                 'first_name':row['first_name'],
                 'last_name':row['last_name'],
                 'email':row['email'],
-                'password':row['password'],
+                'password':"",
                 'created_at':row['users.created_at'],
                 'updated_at':row['users.updated_at'],
             }
-            this_user = user.User(data)
-            this_playlist.likes.append(this_user)
+            this_playlist.creater= user.User(data)
+            all_playlists.append(this_playlist)
+            print('=======')
+            print(f'{all_playlists} this is alll')
         return all_playlists
 
     @classmethod

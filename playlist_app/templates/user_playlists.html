@@ -23,7 +23,7 @@
                             <p class="nav-link">Find your vibe {{user.username}}</p>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="">Register to add</a>
+                            <a class="nav-link" href="/playlist/{{user.id}}/new_playlist">Add new playlist</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/logout">Logout </a>
@@ -44,23 +44,19 @@
             </tr>
             </thead>
             <tbody>
+            {% for p in play%}
             <tr>
-                <th scope="row">yozwers</th>
-                <td>Mark</td>
-                <td>Otto</td>
-
+                <th scope="row">{{p.playlist_name}}</th>
+                <td>{{p.creater.username}}</td>
+                {% if session['user_info'] == p.creater.id%}
+                <td>
+                    <a href="">edit</a>
+                    <a href="">delete</a>
+                    <a href="">check it out</a>
+                </td>
+                {% endif %}
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>jj</td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
