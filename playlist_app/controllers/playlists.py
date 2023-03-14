@@ -31,9 +31,11 @@ def new_playlist(id):
     print(f'{playlist_name} yoooowhast')
     return redirect(f'/playlist/user/{id}/all_playlists')
 
-# @app.route('/playlist/<int:id>/list_playlist')
-# def view_user_all_playlists(id):
-#     pass
+@app.route('/playlist/<int:id>/list_playlist')
+def view_user_genre_playlists(id):
+    if 'user_info' not in session:
+        return redirect ('/')
+    pass
 
 @app.route('/playlist/<int:id>/add_to_playlist')
 def add_song_to_playlist(id):

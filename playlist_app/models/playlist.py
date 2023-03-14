@@ -11,24 +11,23 @@ class Playlist:
 
     def __init__(self,data):
         self.id = data['id']
-        self.playlist_name = data['playlist_name']
         self.track_name = data['track_name']
         self.artist_name = data['artist_name']
         self.user_id = data['user_id']
         self.all_playlist = []
         self.creater = None
         # self.likes = []
-
+    ##this instance should be good, after editing the save query check if it works
     @classmethod
     def save(cls,data):
-        query = 'INSERT INTO playlists (user_id, playlist_name, track_name, artist_name) VALUES(%(user_id)s,%(playlist_name)s, %(track_name)s,%(artist_name)s)'
+        query = 'INSERT INTO playlists (user_id, playlist_name, track_name, artist_name) VALUES(%(user_id)s,%(playlist_name)s, %(track_name)s,%(artist_name)s)' ##this mgiht have to be re-worked to inserte track name and artist into playlist_name
         result = connectToMySQL(cls.db).query_db(query, data)
         print (result)
         return result
 
     @classmethod        #    SELECT * FROM sighting LEFT JOIN users ON sighting.user_id = users.id WHERE sighting.id = %(id)s
     def get_all(cls):
-        query = 'SELECT * FROM playlists LEFT JOIN users ON playlists.user_id = users.id'
+        query = 'SELECT * FROM playlist_contents LEFT JOIN playlists_name ON playlist_contents.user_id = playlists_name.user_id LEFT JOIN users ON playlists_name.user_id = users.id' ##this query should work, it didnt goive an error in the terminal
         results = connectToMySQL(cls.db).query_db(query)
         print (f'{results} this is results')
         all_playlists = []
@@ -52,7 +51,7 @@ class Playlist:
 
     @classmethod
     def get_one(cls,data):
-        query="SELECT * FROM playlists LEFT JOIN likes ON playlists.id = likes.playlist_id LEFT JOIN users ON likes.user_id = users.id WHERE id=%(id)s;"
+        query="SELECT * FROM playlists LEFT JOIN users ON playlists.user_id = users.id WHERE playlists.id=%(id)s;"
         result = connectToMySQL(cls.db).query_db(query,data)
         print(result)
         if result:
