@@ -3,7 +3,7 @@ from playlist_app import app
 
 from flask import Flask, render_template, request, redirect, session, flash
 
-from playlist_app.models import user, playlist
+from playlist_app.models import user, playlist, playlist_name
 
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -82,7 +82,15 @@ def user_show_all_playlists(id):
     if 'user_info' not in session:
         return redirect('/')
 
-    return render_template('user_playlists.html', play = playlist.Playlist.get_all(),user = user.User.get_one_by_id({'id': session['user_info']}))
+    return render_template('user_playlists.html', play = playlist_name.Playlist_name.get_all_playlists_by_user({'id': session['user_info']}),user = user.User.get_one_by_id({'id': session['user_info']}))
+
+@app.route('/playlist/user/<int:id>/single_playlist') ##working here rn
+def user_single_playlist(id):
+
+    if 'user_info' not in session:
+        return redirect('/')
+
+    return render_template('user_single_playlist_list.html', play = playlist.Playlist.get_all_songs_in_playlist({'id':id}),user = user.User.get_one_by_id({'id': session['user_info']}))
 
 @app.route('/playlist/user/<int:id>/update')
 def update_user_page(id):

@@ -3,7 +3,7 @@ from playlist_app import app
 
 from flask import Flask, render_template, request, redirect, session, flash
 
-from playlist_app.models import playlist, user
+from playlist_app.models import playlist, user, playlist_name
 
 
 @app.route('/playlist/<int:id>/new_playlist')
@@ -23,22 +23,31 @@ def new_playlist(id):
         return redirect ('/')
     data = {
         'playlist_name' : request.form['playlist_name'],
-        'track_name' : request.form['track_name'],
-        'artist_name' : request.form['artist_name'],
         'user_id' : session['user_info']
     }
-    playlist_name = playlist.Playlist.save(data)
-    print(f'{playlist_name} yoooowhast')
+    p_name = playlist_name.Playlist_name.save(data)
+    print(f'{p_name} yoooowhast')
     return redirect(f'/playlist/user/{id}/all_playlists')
 
-@app.route('/playlist/<int:id>/list_playlist')
-def view_user_genre_playlists(id):
-    if 'user_info' not in session:
-        return redirect ('/')
-    pass
+# @app.route('/playlist/<int:id>/list_playlist')
+# def view_user_genre_playlists(id):
+
+#     if 'user_info' not in session:
+#         return redirect ('/')
+#     return render_template('user_single_playlist_list.html',user = user.User.get_one_by_id({'id': session['user_info']}) )
+#     pass
 
 @app.route('/playlist/<int:id>/add_to_playlist')
 def add_song_to_playlist(id):
+    if 'user_info' not in session:
+        return redirect ('/')
+
+    data = {
+        'track_name' :request.form['track_name'],
+        'artist_name' :request.form['artist_name'],
+        'user_id' :session['user_info']
+    }
+
     pass
 
 @app.route('/playlist/<int:id>/edit_playlist')

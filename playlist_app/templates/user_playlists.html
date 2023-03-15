@@ -34,8 +34,8 @@
         </nav>
     </div>
 
-    <div>
-        <table class="table table-hover table-dark">
+    <div class="m-3">
+        <table class="table table-hover table-dark ">
             <thead>
             <tr>
                 <th scope="col">playlist name</th>
@@ -46,15 +46,15 @@
             <tbody>
             {% for p in play%}
             <tr>
-                <th scope="row">{{p.playlist_name}}</th>
+                <th scope="row"><a href="/playlist/user/{{p.id}}/single_playlist">{{p.playlist_name}}</a></th>
                 <td>{{p.creater.username}}</td>
-                {% if session['user_info'] == p.creater.id%}
                 <td>
+                    {% if session['user_info'] == p.creater.id%}
                     <a href="">edit</a>
                     <a href="">delete</a>
+                    {% endif %}
                     <a href="">check it out</a>
                 </td>
-                {% endif %}
             </tr>
             {% endfor %}
             </tbody>

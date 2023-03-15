@@ -3,7 +3,7 @@ from playlist_app.config.mysqlconnection import connectToMySQL
 
 from flask import flash
 
-from playlist_app.models import user
+from playlist_app.models import user, playlist_name
 
 
 class Playlist:
@@ -13,45 +13,43 @@ class Playlist:
         self.id = data['id']
         self.track_name = data['track_name']
         self.artist_name = data['artist_name']
-        self.user_id = data['user_id']
-        self.all_playlist = []
-        self.creater = None
+        self.created_at = data['created_at']
+        self.updated_at = data['updated_at']
+        self.playlist_name_id = data['playlist_name_id']
+        self.all_songs_playlist = []
+        
         # self.likes = []
     ##this instance should be good, after editing the save query check if it works
     @classmethod
     def save(cls,data):
-        query = 'INSERT INTO playlists (user_id, playlist_name, track_name, artist_name) VALUES(%(user_id)s,%(playlist_name)s, %(track_name)s,%(artist_name)s)' ##this mgiht have to be re-worked to inserte track name and artist into playlist_name
+        query = 'INSERT INTO playlists_contents (playlist_content_id, track_name, artist_name) VALUES(%(playlist_content_id)s, %(track_name)s,%(artist_name)s)' ##this mgiht have to be re-worked to inserte track name and artist into playlist_name
         result = connectToMySQL(cls.db).query_db(query, data)
         print (result)
         return result
-
-    @classmethod        #    SELECT * FROM sighting LEFT JOIN users ON sighting.user_id = users.id WHERE sighting.id = %(id)s
-    def get_all(cls):
-        query = 'SELECT * FROM playlist_contents LEFT JOIN playlists_name ON playlist_contents.user_id = playlists_name.user_id LEFT JOIN users ON playlists_name.user_id = users.id' ##this query should work, it didnt goive an error in the terminal
-        results = connectToMySQL(cls.db).query_db(query)
+#'SELECT * FROM playlist_contents LEFT JOIN playlists_name ON playlist_contents.playlist_name_id = playlists_name.id WHERE playlists_name.id = %()s'
+##this query finally works all that was missing is 'id'
+    @classmethod        
+    def get_all_songs_in_playlist(cls,data): 
+        print('about to run get all songs in query')
+        query = 'SELECT * FROM playlist_contents LEFT JOIN playlists_name ON playlist_contents.playlist_name_id = playlists_name.id WHERE playlists_name.id = %(id)s' 
+        results = connectToMySQL(cls.db).query_db(query,data)
         print (f'{results} this is results')
-        all_playlists = []
-        for row in results:
-            this_playlist = cls(row)
-            data={
-                'id':row['users.id'],
-                'username':row['username'],
-                'first_name':row['first_name'],
-                'last_name':row['last_name'],
-                'email':row['email'],
-                'password':"",
-                'created_at':row['users.created_at'],
-                'updated_at':row['users.updated_at'],
-            }
-            this_playlist.creater= user.User(data)
-            all_playlists.append(this_playlist)
-            print('=======')
-            print(f'{all_playlists} this is alll')
-        return all_playlists
+        if results:
+            this_playlist = cls(results[0])
+            for row in results:
+                if row['user_id'] == None:
+                    break
+
+            this_playlist.all_songs_playlist.append(playlist_name.Playlist_name(row))
+            return this_playlist
+        print(this_playlist)
+        return False ##figure out why this Playlist object is not iterable
+
+
 
     @classmethod
     def get_one(cls,data):
-        query="SELECT * FROM playlists LEFT JOIN users ON playlists.user_id = users.id WHERE playlists.id=%(id)s;"
+        query="SELECT * FROM playlists_name LEFT JOIN users ON playlists_name.user_id = users.id WHERE playlists.id=%(id)s;"
         result = connectToMySQL(cls.db).query_db(query,data)
         print(result)
         if result:
@@ -60,20 +58,12 @@ class Playlist:
 
     @classmethod
     def update(cls,data):
-        query="UPDATE playlists SET playlist_name=%(playlist_name)s, track_name=%(track_name)s, artist_name=%(artist_name)s WHERE id = %(id)s;"
+        query="UPDATE playlists_contents SET track_name=%(track_name)s, artist_name=%(artist_name)s WHERE id = %(id)s;"
         result = connectToMySQL(cls.db).query_db(query,data)
         return result
 
     @classmethod
     def delete(cls,data):
-        query = 'DELETE FROM playlists WHERE id = %(id)s'
+        query = 'DELETE FROM playlist_contents WHERE id = %(id)s'
         result  = connectToMySQL(cls.db).query_db(query,data)
         return result
-
-    @staticmethod
-    def validate_playlist(playlist):
-        is_valid = True
-        if len(playlist['playlist_name']) < 2:
-            flash("Name must be at least 2 characters long.")
-            is_valid = False
-        return is_valid 
