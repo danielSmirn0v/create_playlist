@@ -38,31 +38,29 @@ def new_playlist(id):
 #     pass
 @app.route('/playlist/<int:id>/add_to_playlist')
 def add_song_page(id):
-    print('hellow world')
+    print(f'hellow world{id}')
     if 'user_info' not in session:
         return redirect ('/')
 
     return render_template('add_to_playlist.html', user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_one_by_user({'id':id}))
 
-@app.route('/playlist/<int:id>/add_to_playlist/create', methods = ['POST'], )
+@app.route('/playlist/<int:id>/add_to_playlist/create', methods = ['POST'] )
 def add_song_to_playlist(id):
 
     if 'user_info' not in session:
         return redirect ('/')
-    play_data ={
-        'id' : id
-    }
-    ##print(f'{id}  ===')
+
+    print(f'{id}  ===')
     data = {
         'track_name' :request.form['track_name'],
         'artist_name' :request.form['artist_name'],
-        'playlists_name_id' : play_data['id']
+        'playlists_name_id' : id
 ##no idea how to insert this into table, a playlists content might be a perfect play fro class associsation, or vie versa, aplaylist is a perfect one ofr trakc ansd artists
     }
     print(f'{data}===sososo')
     songs_in_playlist.Playlist.save(data)
     
-    return redirect('/playlist/user/<int:id>/single_playlist')##did not push to github cause this is so bad
+    return redirect('/playlist/user/<int:id>/single_playlist')
 
 
 @app.route('/playlist/<int:id>/edit_playlist')

@@ -27,8 +27,9 @@ class Playlist_name:
 
     @classmethod
     def get_one_by_user(cls,data):
-        query="SELECT * FROM playlists_name WHERE playlists_name.user_id = %(id)s"
+        query="SELECT * FROM playlists_name WHERE playlists_name.id = %(id)s"##firguerout if this is the query you need
         result = connectToMySQL(cls.db).query_db(query, data)
+        print(f'{result}==playkist')
         return result
 
     @classmethod
@@ -79,43 +80,7 @@ class Playlist_name:
             print('=======')
             print(f'{all_playlists} this is alll')
         return all_playlists
-#SELECT * FROM playlist_contents LEFT JOIN playlists_name ON playlist_contents.= playlists_name.id
-    @classmethod        #SELECT * FROM track JOIN playlists_name ON track.playlist_name_id = playlists_name.id WHERE playlist_name_id = %(id)s
-    def get_all_songs_in_playlist(cls,data): 
-        print('about to run get all songs in query')
-        query = '''SELECT * FROM track
-                    JOIN playlists_name ON track.playlist_name_id = playlists_name.id
-                    WHERE playlist_name_id = %(id)s''' 
-        results = connectToMySQL(cls.db).query_db(query,data)
-        print (f'{results} results returned')
-        all_tracks_in_playlists = []
-        for row in results:
-            this_song = cls(row)
-            playlist_data = {
-                "id": row['playlists_name.id'],
-                "playlist_name": row['playlist_name'],
-                'user_id' : data['user_id'],
-                "created_at": row['playlists_name.created_at'],
-                "updated_at": row['playlists_name.updated_at']
-            }
-            this_song.creater = Playlist_name(playlist_data)
-            all_tracks_in_playlists.append(this_song)
-            print(f'{all_tracks_in_playlists}=====ksdw===')
-
-        # song = Playlist_name.all_songs_playlist(row)
-        # if song:
-        #     song_in_playlist.append(song)
-        # for row in results:
-
-                
-            # if row['user_id'] == None:
-            #     break
-
-
-
-            # song_in_playlist.append(Playlist_name.all_songs_playlist(row))
-        print(f'{results} this is the reulst')
-        return results        ##figure out why this Playlist object is not iterable
+    ##figure out why this Playlist object is not iterable
 
 
 

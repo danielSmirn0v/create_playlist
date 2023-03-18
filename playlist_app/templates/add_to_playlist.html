@@ -14,7 +14,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light "> <!--fixed-top -->
             <div class="container">
-                <h1>Sasquatch logger</h1>
+                <h1>Cloud9</h1>
                 
         
                 <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -49,8 +49,9 @@
     <div class="d-flex justify-content-evenly">
 
         <div class="m-3">
-            <form action="/playlist/{{play.id}}/add_to_playlist/create"  method = 'POST'><!--firgurr out why this form wont accept the id that i pass thorugh and why it wont compete form-->
-                <input type="hidden" name="playlist_id" value="{{play.id}}">
+            
+            <form action="/playlist/{{play.id}}/add_to_playlist/create"  method = 'POST'><!--it is not accepting the the id is not in route, maybe necauee of bad query?-->
+            <!--firgurr out why this form wont accept the id that i pass thorugh and why it wont compete form-->
                 <div class="form-group " >
                     <div class="form-group" style="font-weight: bold;">
                         <label for="ply_nme" >Track name:</label>
