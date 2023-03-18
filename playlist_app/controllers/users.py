@@ -3,13 +3,19 @@ from playlist_app import app
 
 from flask import Flask, render_template, request, redirect, session, flash
 
-from playlist_app.models import user, playlist, playlist_name
+from playlist_app.models import songs_in_playlist, user, playlist_name
 
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 @app.route('/')
 def check():
+    
+    return render_template('list_playlist.html', play = playlist_name.Playlist_name.get_all_playlist())
+
+@app.route('/register')
+def register_form():
+
     return render_template('register.html')
 
 @app.route('/create', methods = ['POST'])
@@ -18,7 +24,7 @@ def register():
     if request.form['action'] == 'register':
 
         if not user.User.validate(request.form):
-            return redirect('/')
+            return redirect('/register')
         
         username_exists = user.User.get_onewith_username({'username': request.form['username']})
         if username_exists:
@@ -73,7 +79,7 @@ def user_dash():
         return redirect('/')
 
     print('wowow')
-    return render_template('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']})) ##dashabord html should be different
+    return render_template('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_all_playlist()) ##dashabord html should be different
 
 
 @app.route('/playlist/user/<int:id>/all_playlists')
@@ -90,7 +96,7 @@ def user_single_playlist(id):
     if 'user_info' not in session:
         return redirect('/')
 
-    return render_template('user_single_playlist_list.html', play = playlist.Playlist.get_all_songs_in_playlist({'id':id}),user = user.User.get_one_by_id({'id': session['user_info']}))
+    return render_template('user_single_playlist_list.html', play = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}),user = user.User.get_one_by_id({'id': session['user_info']}))
 
 @app.route('/playlist/user/<int:id>/update')
 def update_user_page(id):

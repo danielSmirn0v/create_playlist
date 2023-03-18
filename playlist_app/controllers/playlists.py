@@ -3,7 +3,7 @@ from playlist_app import app
 
 from flask import Flask, render_template, request, redirect, session, flash
 
-from playlist_app.models import playlist, user, playlist_name
+from playlist_app.models import songs_in_playlist, user, playlist_name
 
 
 @app.route('/playlist/<int:id>/new_playlist')
@@ -14,7 +14,7 @@ def new_playlist_page(id):
 
 
 
-    return render_template('new_playlist.html',user = user.User.get_one_by_id({'id': session['user_info']}))
+    return render_template('new_playlist.html',user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_all_playlists_by_user({'id':id}))
 
 @app.route('/playlist/<int:id>/new_playlist/create', methods = ['POST'])
 def new_playlist(id):
@@ -36,19 +36,34 @@ def new_playlist(id):
 #         return redirect ('/')
 #     return render_template('user_single_playlist_list.html',user = user.User.get_one_by_id({'id': session['user_info']}) )
 #     pass
-
 @app.route('/playlist/<int:id>/add_to_playlist')
-def add_song_to_playlist(id):
+def add_song_page(id):
+    print('hellow world')
     if 'user_info' not in session:
         return redirect ('/')
 
+    return render_template('add_to_playlist.html', user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_one_by_user({'id':id}))
+
+@app.route('/playlist/<int:id>/add_to_playlist/create', methods = ['POST'], )
+def add_song_to_playlist(id):
+
+    if 'user_info' not in session:
+        return redirect ('/')
+    play_data ={
+        'id' : id
+    }
+    ##print(f'{id}  ===')
     data = {
         'track_name' :request.form['track_name'],
         'artist_name' :request.form['artist_name'],
-        'user_id' :session['user_info']
+        'playlists_name_id' : play_data['id']
+##no idea how to insert this into table, a playlists content might be a perfect play fro class associsation, or vie versa, aplaylist is a perfect one ofr trakc ansd artists
     }
+    print(f'{data}===sososo')
+    songs_in_playlist.Playlist.save(data)
+    
+    return redirect('/playlist/user/<int:id>/single_playlist')##did not push to github cause this is so bad
 
-    pass
 
 @app.route('/playlist/<int:id>/edit_playlist')
 def edit_playlist(id):

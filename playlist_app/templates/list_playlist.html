@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,14 +17,15 @@
                 
         
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item active">
-                            <p class="nav-link">Find your vibe</p>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="">Register to add</a>
-                        </li>
+                <!--add if statement so that if user in session they can naviagte site-->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active">
+                        <p class="nav-link">Find your vibe</p>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/register">register</a>
+                    </li>
                     </ul>
                 </div>
             </div>
@@ -36,27 +38,19 @@
             <tr>
                 <th scope="col">playlist name</th>
                 <th scope="col">creater</th>
-                <th scope="col">listen</th>
+                <th scope="col">check it out</th>
             </tr>
             </thead>
             <tbody>
+            {% for p in play %}
             <tr>
-                <th scope="row">yozwers</th>
-                <td>Mark</td>
-                <td>Otto</td>
-
+                <th scope="row">{{p.playlist_name}}</th>
+                <td>{{p.creater.username}}</td>
+                <td>
+                    <a href="">give it a gander</a><!--make a page that will list playlists with songs-->
+                </td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>jj</td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

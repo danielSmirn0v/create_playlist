@@ -25,6 +25,9 @@
                             <a class="nav-link" href="/playlist/dashboard">Home</a>
                         </li>
                         <li class="nav-item active">
+                            <a class="nav-link" href="/playlist/{{play.id}}/add_to_playlist">add song</a>
+                        </li>
+                        <li class="nav-item active">
                             <a class="nav-link" href="/logout">Logout </a>
                         </li>
                     </ul>
@@ -34,32 +37,22 @@
     </div>
 
     <div>
+        <h1>{{play.playlist_name}}rap<!--should say wahetevr playlist clicked oon--></h1>
         <table class="table table-hover table-dark">
             <thead>
             <tr>
                 <th scope="col">track name, artist name </th>
-                <th scope="col">listen</th>
+
             </tr>
             </thead>
             <tbody>
-            {% for p in play%} <!--can not iterate through Playlist-->
+            {% for p in play%}
             <tr>
-                <th scope="row">{{p.playlist_name}}</th>
-                <td>Mark</td>
-                <td>Otto</td>
+                <th scope="row">{{p.track_name}} by {{p.artist_name}}</th>
             </tr>
             {% endfor %}
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
 
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td>jj</td>
-            </tr>
+            
             </tbody>
         </table>
     </div>
