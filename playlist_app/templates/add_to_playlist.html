@@ -50,8 +50,8 @@
 
         <div class="m-3">
             
-            <form action="/playlist/{{play.id}}/add_to_playlist/create"  method = 'POST'><!--it is not accepting the the id is not in route, maybe necauee of bad query?-->
-            <!--firgurr out why this form wont accept the id that i pass thorugh and why it wont compete form-->
+            <form action="/playlist/{{play[0].id}}/add_to_playlist/create"  method = 'POST'>
+            
                 <div class="form-group " >
                     <div class="form-group" style="font-weight: bold;">
                         <label for="ply_nme" >Track name:</label>

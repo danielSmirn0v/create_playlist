@@ -96,7 +96,7 @@ def user_single_playlist(id):
     if 'user_info' not in session:
         return redirect('/')
 
-    return render_template('user_single_playlist_list.html', play = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}),user = user.User.get_one_by_id({'id': session['user_info']}))
+    return render_template('user_single_playlist_list.html', play = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}),user = user.User.get_one_by_id({'id': session['user_info']}),pl_name = playlist_name.Playlist_name.get_one_by_user({'id':id}))
 
 @app.route('/playlist/user/<int:id>/update')
 def update_user_page(id):

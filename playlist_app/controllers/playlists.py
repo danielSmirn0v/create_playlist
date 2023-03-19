@@ -54,13 +54,13 @@ def add_song_to_playlist(id):
     data = {
         'track_name' :request.form['track_name'],
         'artist_name' :request.form['artist_name'],
-        'playlists_name_id' : id
+        'playlist_name_id' : id
 ##no idea how to insert this into table, a playlists content might be a perfect play fro class associsation, or vie versa, aplaylist is a perfect one ofr trakc ansd artists
     }
-    print(f'{data}===sososo')
+    print(f'{data}')
     songs_in_playlist.Playlist.save(data)
     
-    return redirect('/playlist/user/<int:id>/single_playlist')
+    return redirect('/playlist/dashboard') ##this is just to sample the redirt works
 
 
 @app.route('/playlist/<int:id>/edit_playlist')
