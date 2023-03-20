@@ -20,13 +20,25 @@
                 <!--add if statement so that if user in session they can naviagte site-->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item active">
-                        <p class="nav-link">Find your vibe</p>
+                        <p class="nav-link">Find your vibe {{user.username}}</p>
                     </li>
-
+                    {% if session['user_info'] != session['user_info'] %}
                     <li class="nav-item active">
-                        <a class="nav-link" href="/register">register</a>
+                        <a class="nav-link" href="/">register</a>
                     </li>
-                    </ul>
+                    {% endif %}
+                    {% if session['user_info'] == session['user_info'] %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/playlist/{{user.id}}/new_playlist">Add new playlist</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/logout">Logout </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/playlist/user/{{user.id}}/all_playlists">personal playlist</a>
+                    </li>
+                    {% endif %}
+                </ul>
                 </div>
             </div>
         </nav>
@@ -47,7 +59,7 @@
                 <th scope="row">{{p.playlist_name}}</th>
                 <td>{{p.creater.username}}</td>
                 <td>
-                    <a href="">give it a gander</a><!--make a page that will list playlists with songs-->
+                    <a class="text-decoration-none" href="">give it a gander</a><!--make a page that will list playlists with songs-->
                 </td>
             </tr>
             {% endfor %}

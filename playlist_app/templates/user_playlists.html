@@ -49,14 +49,14 @@
             <tbody>
             {% for p in play%}
             <tr>
-                <th scope="row"><a href="/playlist/user/{{p.id}}/single_playlist">{{p.playlist_name}}</a></th>
+                <th scope="row"><a class="text-decoration-none" href="/playlist/user/{{p.id}}/single_playlist">{{p.playlist_name}}</a></th>
                 <td>{{p.creater.username}}</td>
                 <td>
                     {% if session['user_info'] == p.creater.id%}
-                    <a href="">edit</a>
-                    <a href="">delete</a>
+                    <a class="text-decoration-none" href="">edit</a>
+                    <a class="text-decoration-none" href="">delete</a><!--amke a route in conotroller check if it works-->
                     {% endif %}
-                    <a href="">check it out</a>
+                    <a class="text-decoration-none" href="/playlist/user/{{p.id}}/single_playlist">check it out</a>
                 </td>
             </tr>
             {% endfor %}
