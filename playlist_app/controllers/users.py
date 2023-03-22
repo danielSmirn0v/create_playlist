@@ -13,6 +13,12 @@ def check():
     
     return render_template('list_playlist.html', play = playlist_name.Playlist_name.get_all_playlist())
 
+@app.route('/playlist/user/<int:id>/single_playlist_notin_session')
+def single_playlist(id):
+
+
+    return render_template('list_playlist_with_songs.html', pl_name = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}))
+
 @app.route('/register')
 def register_form():
 
@@ -43,16 +49,14 @@ def register():
         }
 
         user_info = user.User.save(data)
-        print(f'you got {user_info} in ')
+
         session['user_info'] = user_info
-        print()
+
 
     else:
 
 
-        print('wow we are here')
         user_info = user.User.get_onewith_email ({'email': request.form['email'].lower()})
-        print("This is the user")
         print(user_info)
         if user_info:
             if len(request.form['password']) < 8:
@@ -82,6 +86,7 @@ def user_dash():
     return render_template('list_playlist_in_session.html', user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_all_playlist()) ##dashabord html should be different
 
 
+
 @app.route('/playlist/user/<int:id>/all_playlists')
 def user_show_all_playlists(id):
 
@@ -90,11 +95,6 @@ def user_show_all_playlists(id):
 
     return render_template('user_playlists.html', play = playlist_name.Playlist_name.get_all_playlists_by_user({'id': session['user_info']}),user = user.User.get_one_by_id({'id': session['user_info']}))
 
-@app.route('/playlist/user/<int:id>/single_playlist_notin_session') ##working here rn
-def single_playlist(id):
-
-
-    return render_template('list_playlist_with_songs.html', pl_name = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}))
 
 @app.route('/playlist/user/<int:id>/single_playlist') ##working here rn
 def user_single_playlist(id):

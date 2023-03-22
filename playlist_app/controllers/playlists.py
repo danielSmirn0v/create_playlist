@@ -19,6 +19,7 @@ def new_playlist(id):
 
     if 'user_info' not in session:
         return redirect ('/')
+        
     if not playlist_name.Playlist_name.validate_playlist(request.form):
             return redirect(f'/playlist/{id}/new_playlist')
     data = {
@@ -31,7 +32,7 @@ def new_playlist(id):
 
 @app.route('/playlist/<int:id>/add_to_playlist')
 def add_song_page(id):
-    print(f'hellow world{id}')
+
     if 'user_info' not in session:
         return redirect ('/')
 
@@ -42,6 +43,7 @@ def add_song_to_playlist(id):
 
     if 'user_info' not in session:
         return redirect ('/')
+
     if not songs_in_playlist.Playlist.validate_track(request.form):
             return redirect(f'/playlist/{id}/add_to_playlist')
 
@@ -52,7 +54,7 @@ def add_song_to_playlist(id):
         'playlist_name_id' : id
 
     }
-    print(f'{data}')
+
     songs_in_playlist.Playlist.save(data)
     
     return redirect(f'/playlist/user/{id}/single_playlist') 
@@ -85,6 +87,7 @@ def update_playlist_name(id):
 
 @app.route('/playlist/<int:id>/delete_playlist')
 def delete_playlist(id):
+
     if 'user_info' not in session:
         return redirect('/')
 
@@ -94,6 +97,7 @@ def delete_playlist(id):
 
 @app.route('/playlist/<int:id>/delete_song')
 def delete_song(id):
+    
     if 'user_info' not in session:
         return redirect('/')
 
