@@ -90,6 +90,12 @@ def user_show_all_playlists(id):
 
     return render_template('user_playlists.html', play = playlist_name.Playlist_name.get_all_playlists_by_user({'id': session['user_info']}),user = user.User.get_one_by_id({'id': session['user_info']}))
 
+@app.route('/playlist/user/<int:id>/single_playlist_notin_session') ##working here rn
+def single_playlist(id):
+
+
+    return render_template('list_playlist_with_songs.html', pl_name = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}))
+
 @app.route('/playlist/user/<int:id>/single_playlist') ##working here rn
 def user_single_playlist(id):
 

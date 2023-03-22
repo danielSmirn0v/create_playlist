@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <title>Document</title>
 </head>
-<body>
+<body style="background-color:antiquewhite">
     <div >
         <nav class="navbar navbar-expand-lg navbar-light bg-light "> 
             <div class="container">
@@ -20,24 +20,15 @@
                 <!--add if statement so that if user in session they can naviagte site-->
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item active">
-                        <p class="nav-link">Find your vibe {{user.username}}</p>
+                        <p class="nav-link">Find your vibe </p>
                     </li>
-                    {% if session['user_info'] != session['user_info'] %}
+
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">register</a>
+                        <a class="nav-link" href="/register">register</a>
                     </li>
-                    {% endif %}
-                    {% if session['user_info'] == session['user_info'] %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/playlist/{{user.id}}/new_playlist">Add new playlist</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/logout">Logout </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/playlist/user/{{user.id}}/all_playlists">personal playlist</a>
-                    </li>
-                    {% endif %}
+
+
+
                 </ul>
                 </div>
             </div>
@@ -56,10 +47,10 @@
             <tbody>
             {% for p in play %}
             <tr>
-                <th scope="row">{{p.playlist_name}}</th>
+                <th scope="row"><em>{{p.playlist_name}}</em></th>
                 <td>{{p.creater.username}}</td>
                 <td>
-                    <a class="text-decoration-none" href="">give it a gander</a><!--make a page that will list playlists with songs-->
+                    <a class="text-decoration-none" href="/playlist/user/{{p.id}}/single_playlist_notin_session">give it a gander</a><!--make a page that will list playlists with songs-->
                 </td>
             </tr>
             {% endfor %}
@@ -71,5 +62,3 @@
 </body>
 </html>
 
-{% if play[0] %}
-{% endif %}

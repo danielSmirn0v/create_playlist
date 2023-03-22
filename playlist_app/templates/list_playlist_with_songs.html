@@ -7,59 +7,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="javascript.js"></script>
     <title>Document</title>
 </head>
 <body style="background-color:antiquewhite">
     <div >
         <nav class="navbar navbar-expand-lg navbar-light bg-light "> 
             <div class="container">
-                <h1>Cloud9 playlists</h1>
-                
+
+                <h1>{{pl_name[0].creater.playlist_name}} playlist</h1>
+
         
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                 
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item active">
-                            <p class="nav-link">Find your vibe {{user.username}}</p>
+                            <p class="nav-link">Find your vibe </p>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/playlist/dashboard">Home</a>
+                            <a class="nav-link" href="/">All Playlists</a>
                         </li>
+
                         <li class="nav-item active">
-                            <a class="nav-link" href="/playlist/{{user.id}}/new_playlist">Add new playlist</a>
+                            <a class="nav-link" href="/register">register</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/logout">Logout </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 
-    <div class="m-3">
-        <table class="table table-hover table-dark ">
+    <div class=" m-auto w-50 ">
+
+        <table class="table table-hover table-dark">
             <thead>
-            <tr>
-                <th scope="col">playlist name</th>
-                <th scope="col">creater</th>
-                <th scope="col">listen</th>
+            <tr >
+                <th scope="col" >track name, artist name </th>
+
+
+                
+
             </tr>
             </thead>
-            <tbody>
-            {% for p in play%}
+            <tbody >
+            {% for p in pl_name%}
             <tr>
-                <th scope="row"><a class="text-decoration-none" href="/playlist/user/{{p.id}}/single_playlist"> {{p.playlist_name}}</a></th>
-                <td>{{p.creater.username}}</td>
-                <td>
-                    {% if session['user_info'] == p.creater.id%}
-                    <a class="text-decoration-none" href="">edit</a>
-                    <a class="text-decoration-none" href="/playlist/{{p.id}}/delete_playlist">delete</a><!--amke a route in conotroller check if it works-->
-                    {% endif %}
-                    <a class="text-decoration-none" href="/playlist/user/{{p.id}}/single_playlist">check it out</a>
-                </td>
+                <th  scope="row"><em>{{p.track_name}}</em> by <em>{{p.artist_name}}</em> </th>
             </tr>
             {% endfor %}
+
+            
             </tbody>
         </table>
     </div>

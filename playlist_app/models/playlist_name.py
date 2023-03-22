@@ -27,7 +27,7 @@ class Playlist_name:
 
     @classmethod
     def get_one_by_user(cls,data):
-        query="SELECT * FROM playlists_name WHERE playlists_name.id = %(id)s"##firguerout if this is the query you need
+        query="SELECT * FROM playlists_name WHERE playlists_name.id = %(id)s"
         result = connectToMySQL(cls.db).query_db(query, data)
         print(f'{result}==playkist')
         return result
@@ -81,9 +81,23 @@ class Playlist_name:
             print(f'{all_playlists} this is alll')
         return all_playlists
     ##figure out why this Playlist object is not iterable
+##query = 'DELETE FROM playlists_name WHERE id = %(id)s'
+    @classmethod
+    def delete_playlist(cls,data):
+        print('about to run delete query')
+        track_query = 'DELETE FROM track WHERE playlist_name_id = %(id)s'
+        result  = connectToMySQL(cls.db).query_db(track_query,data)
+        playlist_query = 'DELETE FROM playlists_name WHERE id = %(id)s'
+        playlist_result  = connectToMySQL(cls.db).query_db(playlist_query,data)
+        print('ran delete')
+        print(result)
+        return playlist_result
 
-
-
+    @classmethod
+    def update_playlist(cls,data):
+        query="UPDATE playlists_name SET playlist_name = %(playlist_name)s WHERE id = %(id)s;"
+        result = connectToMySQL(cls.db).query_db(query,data)
+        return result
 
     @staticmethod
     def validate_playlist(playlist):

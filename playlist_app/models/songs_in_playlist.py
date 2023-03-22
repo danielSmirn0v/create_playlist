@@ -69,7 +69,18 @@ class Playlist:
         return result
 
     @classmethod
-    def delete(cls,data):
+    def delete_song(cls,data):
         query = 'DELETE FROM track WHERE id = %(id)s'
         result  = connectToMySQL(cls.db).query_db(query,data)
         return result
+
+    @staticmethod
+    def validate_track(track):
+        is_valid = True
+        if len(track['track_name']) < 2:
+            flash("Track name must be at least 2 characters long.")
+            is_valid = False
+        if len(track['artist_name']) < 2:
+            flash("Artist must be at least 2 characters long.")
+            is_valid = False
+        return is_valid 
