@@ -36,7 +36,7 @@ def add_song_page(id):
     if 'user_info' not in session:
         return redirect ('/')
 
-    return render_template('add_to_playlist.html', user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_one_by_user({'id':id}))
+    return render_template('add_to_playlist.html', user = user.User.get_one_by_id({'id': session['user_info']}), play = playlist_name.Playlist_name.get_one_by_playlist_id({'id':id}))
 
 @app.route('/playlist/<int:id>/add_to_playlist/create', methods = ['POST'] )
 def add_song_to_playlist(id):
@@ -65,7 +65,7 @@ def update_playlist(id):
     if 'user_info' not in session:
         return redirect('/')
 
-    return render_template('update_playlist_name.html', pl_name = playlist_name.Playlist_name.get_one_by_user({'id':id}), user = user.User.get_one_by_id({'id': session['user_info']}))
+    return render_template('update_playlist_name.html', pl_name = playlist_name.Playlist_name.get_one_by_playlist_id({'id':id}), user = user.User.get_one_by_id({'id': session['user_info']}))
 
 @app.route('/playlist/<int:id>/update/playlistname', methods = ['POST']) ##update works
 def update_playlist_name(id):

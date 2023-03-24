@@ -21,7 +21,7 @@ class User:
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        
+
 
     @classmethod 
     def save(cls,data):
@@ -96,9 +96,12 @@ class User:
         if not EMAIL_REGEX.match(user['email']):
             flash("User already taken")
             is_valid = False
-#        if not username.match(user['username']):#fig8ure out a way to test if username already taken
-#            flash("User already taken")
-#            is_valid = False
+        else:
+            query = 'SELECT * FROM users WHERE username = %(username)s'
+            result = connectToMySQL(User.db).query_db(query, user)
+            if result:
+                flash('Username already taken')
+                is_valid = False
         return is_valid
 
     @staticmethod
@@ -115,7 +118,7 @@ class User:
         if not EMAIL_REGEX.match(user['email']):
             flash("email not available")
             is_valid = False
-#        if not username.match(user['username']):#fig8ure out a way to test if username already taken
-#            flash("User already taken")
-#            is_valid = False
+        if not user['username'].match(user['username']):
+            flash('username already taken')
+            is_valid = False
         return is_valid

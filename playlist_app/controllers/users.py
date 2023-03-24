@@ -17,7 +17,7 @@ def check():
 def single_playlist(id):
 
 
-    return render_template('list_playlist_with_songs.html', pl_name = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}))
+    return render_template('list_playlist_with_songs.html',play = playlist_name.Playlist_name.get_one_by_user({'id':id}), pl_name = songs_in_playlist.Playlist.get_all_songs_in_playlist({'id':id}))
 
 @app.route('/register')
 def register_form():

@@ -27,12 +27,12 @@ class Playlist:
         return result
 
 
-    @classmethod
-    def get_all_track_in_playlist(cls,data):
-        query="""SELECT * FROM track WHERE playlist_name_id = %(id)s;"""
-        results = connectToMySQL(cls.db).query_db(query,data)
-        print(results)
-        return results
+    # @classmethod
+    # def get_all_track_in_playlist(cls,data):
+    #     query="""SELECT * FROM track WHERE playlist_name_id = %(id)s;"""
+    #     results = connectToMySQL(cls.db).query_db(query,data)
+    #     print(results)
+    #     return results
 
 #SELECT * FROM playlist_contents LEFT JOIN playlists_name ON playlist_contents.= playlists_name.id #SELECT * FROM track JOIN playlists_name ON track.playlist_name_id = playlists_name.id WHERE playlist_name_id = %(id)s
     @classmethod        
@@ -58,7 +58,7 @@ class Playlist:
             this_playlist.creater = playlist_name.Playlist_name(playlist_data)
             all_tracks_in_playlists.append(this_playlist)
             print(f'{this_playlist}this is the creater')
-            print(f'{results}=====ksdw===')
+            print(f'{all_tracks_in_playlists}=====ksdw===')
         print(f'{len(all_tracks_in_playlists)} tracks in playlists')
         return all_tracks_in_playlists    
 
