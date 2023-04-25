@@ -9,6 +9,7 @@ filelock==3.9.0
 Flask==2.2.2
 Flask-Bcrypt==1.0.1
 future @ file:///System/Volumes/Data/SWE/Apps/DT/BuildRoots/BuildRoot2/ActiveBuildRoot/Library/Caches/com.apple.xbs/Sources/python3/python3-124/future-0.18.2-py3-none-any.whl
+gunicorn==20.1.0
 importlib-metadata==6.0.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
