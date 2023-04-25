@@ -1,0 +1,1 @@
+web: gunicorn playlist_app:app
