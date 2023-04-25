@@ -1,1 +1,1 @@
-web: gunicorn playlist_app:app
+web: gunicorn app:app
