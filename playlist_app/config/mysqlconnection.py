@@ -6,20 +6,14 @@ import os
 class MySQLConnection:
     def __init__(self, db):
         # change the user and password as needed
-        connection = pymysql.connect(host=os.environ['DATABASE_URL'],
-                            user=os.environ['DATABASE_USERNAME'],
-                            password=os.environ['DATABASE_PASSWORD'],
-                            db=os.environ['DATABASE_NAME'],
-                            charset='utf8mb4',
-                            cursorclass=pymysql.cursors.DictCursor)
-        # connection = pymysql.connect(host = 'localhost',
-        #                             user = 'root', 
-        #                             password = 'Beetlejuice1', 
-        #                             db = db,
-        #                             charset = 'utf8mb4',
-        #                             cursorclass = pymysql.cursors.DictCursor,
-        #                             autocommit = True)
-        # establish the connection to the database
+        connection = pymysql.connect(host = 'localhost',
+                                    user = 'root', 
+                                    password = 'Beetlejuice1', 
+                                    db = db,
+                                    charset = 'utf8mb4',
+                                    cursorclass = pymysql.cursors.DictCursor,
+                                    autocommit = True)
+        #establish the connection to the database
         self.connection = connection
     # the method to query the database
     def query_db(self, query, data=None):
