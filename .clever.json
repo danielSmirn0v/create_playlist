@@ -1,8 +1,8 @@
 
 {
     "deploy": {
-    "env": {
-        "CC_PYTHON_MODULE": "server:app"
+    "environment": {
+        "CC_PYTHON_MODULE": "server.py"
     }
     }
 }
